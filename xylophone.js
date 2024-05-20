@@ -40,8 +40,8 @@ var manifest = [
     ]];
 
 
-function playSound(target) {
-    new Audio(soundsPath + manifest[wordNumber][target.id] + extension).play();
+function playSound(index) {
+    new Audio(soundsPath + manifest[wordNumber][index] + extension).play();
 
     if (wordNumber < 4) {
         wordNumber++;
@@ -49,3 +49,22 @@ function playSound(target) {
         wordNumber = 0;
     }
 }
+
+function toggleActiveBar(index) {
+  const bar = document.getElementById(index.toString())
+  bar.classList.add("active")
+  setTimeout(() => {
+    bar.classList.remove("active")
+  }, 200)
+}
+
+window.addEventListener("keydown", (ev) => {
+  const index = Number(ev.key) - 1
+  if (Number.isNaN(index) ||
+      index < 0 ||
+      index >= manifest.length
+  ) { return }
+
+  playSound(index)
+  toggleActiveBar(index)
+})
